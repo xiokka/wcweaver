@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>$TITLE - $CURRENT_PAGE of $TOTAL_PAGES</title>
+  <style>
+    .clickable-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      z-index: 9999;
+      pointer-events: none;
+    }
+
+    .clickable-half {
+      flex: 1;
+      pointer-events: auto;
+    }
+
+    .clickable-half.left {
+      background: rgba(0, 0, 0, 0);
+    }
+
+    .clickable-half.right {
+      background: rgba(0, 0, 0, 0);
+    }
+
+    .clickable-half a {
+      display: block;
+      width: 100%;
+      height: 100%;
+      text-indent: -9999px;
+    }
+
+.clickable-half.left::before,
+.clickable-half.right::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 3rem;
+  color: white;
+  opacity: 0.6;
+  pointer-events: none;
+  font-family: Arial, sans-serif;
+}
+
+.clickable-half.left::before {
+  content: '<';
+  left: 1rem;
+}
+
+.clickable-half.right::before {
+  content: '>';
+  right: 1rem;
+}
+
+    html, body {
+      margin: 0;
+      height: 100vh;
+      width: 100vw;
+      background-color: black;
+    }
+
+    .content-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      max-width: 100vw;
+      max-height: 100vh;
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .content {
+      line-height: 0;
+    }
+
+    .content img {
+      width: 100vw;
+      height: 100vh;
+      object-fit: contain;
+      user-select: none;
+      display: block;
+	
+    }
+  </style>
+</head>
+<body>
+
+  <div class="clickable-overlay">
+    <div class="clickable-half left">
+      <a href="$PREVIOUS">Previous</a>
+    </div>
+    <div class="clickable-half right">
+      <a href="$NEXT">Next</a>
+    </div>
+  </div>
+
+  <div class="content-wrapper">
+    <div class="content">
+      <img src="$IMAGE">
+    </div>
+  </div>
+
+</body>
+</html>
