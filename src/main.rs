@@ -1,5 +1,6 @@
 mod generator;
 use crate::generator::generate_reader;
+use crate::generator::generate_reader_javascript;
 
 use eframe::egui;
 use rfd::FileDialog;
@@ -7,6 +8,7 @@ use rfd::FileDialog;
 pub struct MyApp {
 	folder_path: Option<String>,
 	custom_template: Option<String>,
+	use_javascript: bool,
 }
 
 impl Default for MyApp {
@@ -14,6 +16,7 @@ impl Default for MyApp {
     		Self {
     			folder_path: None,
     			custom_template: None,
+    			use_javascript: false,
     		}
 	}
 }
@@ -54,11 +57,17 @@ fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
 	   	 	ui.label("If no custom template is selected, the default template will be used.");
 	   	 }
 
+	   	 ui.add(egui::Checkbox::new(&mut self.use_javascript, "Use JavaScript"));
+
 		// "Generate" button
 		if let Some(path) = &self.folder_path {
 			ui.heading("Generate HTML");
                         if ui.button("Generate").clicked() {
-                                generate_reader(&path, &self.custom_template);
+                        	if self.use_javascript {
+                        		generate_reader_javascript(&path, &self.custom_template);
+                        	} else {
+                        		generate_reader(&path, &self.custom_template);
+                        	}
                                 self.folder_path = None;
                         }
 
