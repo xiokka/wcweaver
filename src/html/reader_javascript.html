@@ -108,36 +108,44 @@
     </div>
   </div>
 
+
 <script>
-    const images = $ARRAY;
+  const images = $ARRAY;
+  const MAX = $TOTAL_PAGES;
 
-    const MAX = $TOTAL_PAGES;
-    let index = 0;
+  // Get index from URL
+  const urlParams = new URLSearchParams(window.location.search);
+  let index = parseInt(urlParams.get('index')) || 0;
 
-    function updateImage() {
-      document.getElementById('displayed-image').src = images[index];
+  if (index < 0) index = 0;
+  if (index > MAX) index = MAX;
+
+  function updateImage() {
+    document.getElementById('displayed-image').src = images[index];
+    history.replaceState(null, '', `?index=${index}`);
+  }
+
+  function increase() {
+    if (index < MAX) {
+      index++;
+      updateImage();
+    } else {
+      window.location.href = "$END";
     }
+  }
 
-    function increase() {
-      if (index < MAX) {
-        index++;
-        updateImage();
-      } else { 
-          window.location.href = "$END";
-      }
-
+  function decrease() {
+    if (index > 0) {
+      index--;
+      updateImage();
+    } else {
+      window.location.href = "$END";
     }
+  }
 
-    function decrease() {
-      if (index > 0) {
-        index--;
-        updateImage();
-      } else {
-	  window.location.href = "$END";
-      }
-    }
-    updateImage();
-  </script>
+  updateImage();
+</script>
+
 
 
 </body>

@@ -1,2 +1,1 @@
 Create placeholder for image comment metadata (for transcripts)
-Remember last page visited by user
